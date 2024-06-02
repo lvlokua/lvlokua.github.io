@@ -16,11 +16,15 @@
   <meta name="author" content="lvandy">
   <meta name="keywords" content="">
   
-    <meta property="og:type" content="website">
-<meta property="og:title" content="友链">
-<meta property="og:url" content="http://example.com/links/index.html">
+    <meta name="description" content="SPEEDTEST LITE C2S              html,         body {             margin: 0;             padding: 0;             border: none;             text-align: center;             background-color:#14152">
+<meta property="og:type" content="website">
+<meta property="og:title" content="page.title">
+<meta property="og:url" content="http://example.com/ping/speedtest_worker.html">
 <meta property="og:site_name" content="hi">
+<meta property="og:description" content="SPEEDTEST LITE C2S              html,         body {             margin: 0;             padding: 0;             border: none;             text-align: center;             background-color:#14152">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-06-02T02:10:09.286Z">
+<meta property="article:modified_time" content="2017-05-24T09:44:52.773Z">
 <meta property="article:author" content="lvandy">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -28,7 +32,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>友链 - hi</title>
+  <title>page.title - hi</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -227,7 +231,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="友情链接"></span>
+            <span id="subtitle" data-typed-text="page.title"></span>
           
         </div>
 
@@ -254,79 +258,167 @@
               <div class="col-12 col-md-10 m-auto">
                 
 
-<div class="row links">
-  
-    
-    <div class="card col-lg-4 col-md-6 col-sm-12">
-      <a href="https://hexo.fluid-dev.com/" class="card-body hover-with-bg" target="_blank" rel="noopener">
-        <div class="card-content">
-          
-            <div class="link-avatar my-auto">
-              <img src="/img/favicon.png" srcset="https://hexo-1319691166.cos.ap-beijing.myqcloud.com/loading.gif" lazyload alt="Fluid Blog"
-                   onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
-            </div>
-          
-          <div class="link-text">
-            <div class="link-title">Fluid Blog</div>
-            <div class="link-intro">主题博客</div>
-          </div>
+<article class="page-content">
+  <!DOCTYPE html>
+<html>
+<head>
+    <title>SPEEDTEST LITE C2S</title>
+    <style type="text/css">
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            border: none;
+            text-align: center;
+            background-color:#141526;
+            color: #FFF;
+			font-family: 微软雅黑;
+        }
+
+        div.test {
+            display: inline-block;
+            margin: 1em;
+            font-size: 2vw;
+            min-width: 10vw;
+            text-align: center;
+        }
+
+        div.testName,
+        div.meterUnit {
+            font-size: 1em;
+        }
+
+        div.meter {
+            font-size: 1.5em;
+            line-height: 2em;
+            height: 2em !important;
+        }
+
+        .flash {
+            animation: flash 0.6s linear infinite;
+        }
+
+        @keyframes flash {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        a {
+            display: inline-block;
+            border: 0.15em solid #FFF;
+            padding: 0.3em 0.5em;
+            margin: 0.6em;
+            color: #FFF;
+            text-decoration: none;
+        }
+
+        #ip {
+            margin: 0.8em 0;
+            font-size: 1.2em;
+        }
+
+        @media all and (max-width: 50em) {
+            div.test {
+                font-size: 2em;
+            }
+        }
+      .lite-text{display:inline-block;background-color:#fff38e;color:#0b0c1b;border-radius:.2em;padding:.2em .2em .2em;margin-left:.4em;font-weight:700;line-height:1;font-size:11px;font-size:1.1rem;position:relative;top:-.4em}
+    </style>
+    <script type="text/javascript">
+        var w = null
+        function runTest() {
+            document.getElementById('startBtn').style.display = 'none'
+            document.getElementById('testArea').style.display = ''
+            document.getElementById('abortBtn').style.display = ''
+            document.getElementById('ip').style.display = ''
+            document.getElementById('intro').innerHTML = "当前客户端IP："
+            w = new Worker('./speedtest_worker.min.js')
+            var interval = setInterval(function () { w.postMessage('status') }, 100)
+            w.onmessage = function (event) {
+                var data = event.data.split(';')
+                var status = Number(data[0])
+                var dl = document.getElementById('download')
+                var ul = document.getElementById('upload')
+                var ping = document.getElementById('ping')
+                var ip = document.getElementById('ip')
+                var jitter = document.getElementById('jitter')
+                dl.className = status === 1 ? 'flash' : ''
+                ping.className = status === 2 ? 'flash' : ''
+                jitter.className = ul.className = status === 3 ? 'flash' : ''
+                if (status === 4) {
+                    clearInterval(interval)
+                    document.getElementById('abortBtn').style.display = 'none'
+                    document.getElementById('startBtn').style.display = ''
+                    document.getElementById('startBtn').innerHTML = "重新测试"
+                    document.getElementById('intro').innerHTML = "当前客户端IP："
+                    w = null
+                }
+                if (status === 5) {
+                    clearInterval(interval)
+                    document.getElementById('testArea').style.display = 'none'
+                    document.getElementById('abortBtn').style.display = 'none'
+                    document.getElementById('startBtn').style.display = ''
+                    document.getElementById('startBtn').innerHTML = "开始测试"
+                    document.getElementById('intro').innerHTML = "客户端对服务器网络测试"
+                    document.getElementById('ip').style.display = 'none'
+                }
+                dl.textContent = data[1]
+                ul.textContent = data[2]
+                ping.textContent = data[3]
+                jitter.textContent = data[5]
+                ip.textContent = data[4]
+            }
+            w.postMessage('start')
+        }
+        function abortTest() {
+            if (w) w.postMessage('abort')
+        }
+    </script>
+</head>
+
+<body>
+    <br />
+    <h1>SPEEDTEST<div class="lite-text">LITE</div></h1>
+  <div id="intro">客户端对服务器网络测试</div>
+  <div id="ip" style="display:none">None</div><br />
+  <a href="javascript:runTest()" id="startBtn">开始测试</a>
+  <a href="javascript:abortTest()" style="display:none" id="abortBtn">取消测试</a>
+    <div id="testArea" style="display:none">
+        
+        <div class="test">
+            <div class="testName">下载速度</div>
+            <div class="meter">&nbsp;<span id="download"></span>&nbsp;</div>
+            <div class="meterUnit">Mbit/s</div>
         </div>
-      </a>
-    </div>
-  
-    
-    <div class="card col-lg-4 col-md-6 col-sm-12">
-      <a href="https://hexo.fluid-dev.com/docs/" class="card-body hover-with-bg" target="_blank" rel="noopener">
-        <div class="card-content">
-          
-            <div class="link-avatar my-auto">
-              <img src="/img/favicon.png" srcset="https://hexo-1319691166.cos.ap-beijing.myqcloud.com/loading.gif" lazyload alt="Fluid Docs"
-                   onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
-            </div>
-          
-          <div class="link-text">
-            <div class="link-title">Fluid Docs</div>
-            <div class="link-intro">主题使用指南</div>
-          </div>
+        <div class="test">
+            <div class="testName">上传速度</div>
+            <div class="meter">&nbsp;<span id="upload"></span>&nbsp;</div>
+            <div class="meterUnit">Mbit/s</div>
         </div>
-      </a>
-    </div>
-  
-    
-    <div class="card col-lg-4 col-md-6 col-sm-12">
-      <a href="https://github.com/fluid-dev/hexo-theme-fluid" class="card-body hover-with-bg" target="_blank" rel="noopener">
-        <div class="card-content">
-          
-            <div class="link-avatar my-auto">
-              <img src="/img/favicon.png" srcset="https://hexo-1319691166.cos.ap-beijing.myqcloud.com/loading.gif" lazyload alt="Fluid Repo"
-                   onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
-            </div>
-          
-          <div class="link-text">
-            <div class="link-title">Fluid Repo</div>
-            <div class="link-intro">主题 GitHub 仓库</div>
-          </div>
+        <div class="test">
+            <div class="testName">平均延迟</div>
+            <div class="meter">&nbsp;<span id="ping"></span>&nbsp;</div>
+            <div class="meterUnit">ms</div>
         </div>
-      </a>
+        <div class="test">
+            <div class="testName">延迟波动</div>
+            <div class="meter">&nbsp;<span id="jitter"></span>&nbsp;</div>
+            <div class="meterUnit">ms</div>
+        </div>
+        <br/>
+        
     </div>
-  
-</div>
-
-
-  <!-- Custom -->
-  <div class="custom mx-auto">
-    <hr><p>在下方留言申请加入我的友链，按如下格式提供信息：</p><ul><li>博客名：Fluid</li><li>简介：Fluid 主题官方博客</li><li>链接：https://hexo.fluid-dev.com</li><li>图片：https://hexo.fluid-dev.com/img/favicon.png</li></ul>
-  </div>
-
+<!--
+Localization and optimization by Jonvi
+Thanks:https://github.com/adolfintel/speedtest
+-->
+</body>
+</html>
 
 
   
-  
-    <article id="comments" lazyload>
-      
 
-    </article>
-  
+</article>
 
 
 
